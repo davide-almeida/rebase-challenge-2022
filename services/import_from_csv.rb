@@ -1,13 +1,9 @@
 require 'csv'
 require 'pg'
-
-# Services
-require_relative 'connect_database'
+require_relative '../config/connect_database'
 require_relative 'create_database'
 
-# Import CSV file and save on DB
 class ImportFromCsv
-  # Database and tables
   @conn = ConnectDatabase.connection
   @conn.exec(CreateDatabase.drop_table('medic_data'))
   @conn.exec(CreateDatabase.create_table('medic_data'))
@@ -15,7 +11,7 @@ class ImportFromCsv
   def self.csv_file(csv_file)
     csv_rows = CSV.read(csv_file, col_sep: ';')
     csv_rows.shift
-    save_csv_file(csv_rows)
+    csv_rows
   end
 
   def self.save_csv_file(rows)

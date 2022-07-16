@@ -1,6 +1,5 @@
 require 'pg'
 
-# Service to connect application to postgres database
 class ConnectDatabase
   def self.connection
     PG.connect(

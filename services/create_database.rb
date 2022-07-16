@@ -1,4 +1,3 @@
-# Create the database and table medic_data
 class CreateDatabase
   def self.drop_table(table_name)
     "DROP TABLE IF EXISTS #{table_name};"

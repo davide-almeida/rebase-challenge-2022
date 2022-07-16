@@ -8,4 +8,4 @@ docker run \
   -it \
   --network rebase \
   ruby \
-  bash -c "gem install rack sinatra puma pg rspec && bash"
+  bash -c "gem install rack sinatra puma pg rspec rack-test redis sidekiq && bash"
