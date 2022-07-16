@@ -4,7 +4,7 @@ require_relative 'create_database'
 
 class SelectTable
   @conn = ConnectDatabase.connection
-  @conn.exec(CreateDatabase.create_table('medic_data'))
+  @conn.exec(CreateDatabase.create_table('client'))
 
   def self.all(table_name)
     @conn.exec_params("select * from #{table_name}")
