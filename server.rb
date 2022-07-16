@@ -13,9 +13,9 @@ class Server < Sinatra::Base
   set :port, 3000
 
   get '/tests' do
-    rows = SelectTable.all('medic_data')
+    rows = SelectTable.all('client')
     if rows.count.positive?
-      column_names = SelectTable.column_names('medic_data')
+      column_names = SelectTable.column_names('client')
 
       rows.map do |row|
         row.each_with_object({}).with_index do |(cell, acc), idx|
