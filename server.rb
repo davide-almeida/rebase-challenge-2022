@@ -7,6 +7,7 @@ require './services/import_from_csv'
 require './services/select_table'
 require_relative './config/sidekiq'
 require_relative './workers/csv_worker'
+require 'json'
 
 class Server < Sinatra::Base
   set :bind, '0.0.0.0'
@@ -36,6 +37,25 @@ class Server < Sinatra::Base
       CsvWorker.perform_async(csv_file_rows)
       { 'message': 'O cadastro está sendo processado!' }.to_json
     end
+  end
+
+  get '/tests/:token' do
+    rows = SelectTable.test_by_token(params[:token])
+    doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
+    client = SelectTable.get_client(rows[0]['client_id'])
+
+    client['doctor'] = doctor
+    client['tests'] = []
+
+    rows.map do |row|
+      client['tests'] << {
+        'test_type': row['test_type'],
+        'test_limits': row['limits'],
+        'result': row['result']
+      }
+    end
+
+    JSON[client]
   end
 
   run! if app_file == $PROGRAM_NAME

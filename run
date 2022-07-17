@@ -1,11 +1,3 @@
 #!/bin/bash
 
-docker run \
-  --rm \
-  -w /app \
-  -v $(pwd):/app \
-  -p 3000:3000 \
-  -it \
-  --network rebase \
-  ruby \
-  bash -c "gem install rack sinatra puma pg rspec rack-test redis sidekiq && bash"
+docker run --rm -w /app -v $(pwd):/app -p 3000:3000 -it --network rebase ruby bash -c "gem install rack sinatra puma pg rspec rack-test redis sidekiq && bash"
