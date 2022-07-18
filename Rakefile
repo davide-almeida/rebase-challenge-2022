@@ -21,7 +21,7 @@ namespace :database do
       cpf varchar(20),
       name varchar(450),
       email varchar(100),
-      birthdate DATE,
+      birthday DATE,
       address varchar(100),
       city varchar(100),
       state varchar(100)
@@ -69,7 +69,7 @@ namespace :seed_database do
         @client_array << values_client
         puts 'Insert client database...'
         client_res = @conn.exec_params(
-          'INSERT INTO clients ( cpf, name, email, birthdate, address, city, state )
+          'INSERT INTO clients ( cpf, name, email, birthday, address, city, state )
           VALUES ( $1::text, $2::text, $3::text, $4::date, $5::text, $6::text, $7::text)
           RETURNING id;', values_client
         )

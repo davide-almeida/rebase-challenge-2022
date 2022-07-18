@@ -1,27 +1,42 @@
-class CreateDatabase
-  def self.drop_table(table_name)
-    "DROP TABLE IF EXISTS #{table_name};"
-  end
+require 'pg'
+require_relative '../config/connect_database'
 
-  def self.create_table(table_name)
-    "CREATE TABLE IF NOT EXISTS #{table_name} (
-      cpf_code varchar(20),
+class CreateDatabase
+  def self.create_tables
+    @conn = ConnectDatabase.connection
+    puts 'Create client database...'
+    @conn.exec('CREATE TABLE IF NOT EXISTS clients (
+      ID SERIAL PRIMARY KEY,
+      cpf varchar(20),
       name varchar(450),
       email varchar(100),
-      birthdate DATE,
+      birthday DATE,
       address varchar(100),
       city varchar(100),
-      state varchar(100),
-      crm_code varchar(100),
+      state varchar(100)
+    )')
+
+    puts 'Create doctor database'
+    @conn.exec('CREATE TABLE IF NOT EXISTS doctors (
+      ID SERIAL PRIMARY KEY,
+      crm varchar(100),
       crm_state varchar(100),
-      doctor_name varchar(100),
-      doctor_email varchar(100),
-      token_exame_result varchar(100),
-      exame_date DATE,
-      exame_type varchar(100),
-      exame_type_limit varchar(100),
-      exame_result INT,
-      ID SERIAL PRIMARY KEY
-    )"
+      name varchar(100),
+      email varchar(100)
+    )')
+
+    puts 'Create test database'
+    @conn.exec('CREATE TABLE IF NOT EXISTS tests (
+      ID SERIAL PRIMARY KEY,
+      client_id int NOT NULL,
+      doctor_id int NOT NULL,
+      FOREIGN KEY (client_id) REFERENCES clients (id),
+      FOREIGN KEY (doctor_id) REFERENCES doctors (id),
+      result_date DATE,
+      test_type varchar(100),
+      limits varchar(100),
+      result INT,
+      result_token varchar(100)
+    )')
   end
 end
