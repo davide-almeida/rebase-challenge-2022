@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'csv'
 
 describe 'Trying extract data from default file' do
   let(:app) { Server.new }
@@ -7,9 +6,14 @@ describe 'Trying extract data from default file' do
   it 'and importing to database with success' do
     csv_rows = ImportFromCsv.csv_file('data.csv')
     ImportFromCsv.save_csv_file(csv_rows)
-    table_rows = SelectTable.all('client')
 
-    expect(table_rows.count).to eq 3900
-    expect(table_rows.first['cpf_code']).to eq '048.973.170-88'
+    all_clients = SelectTable.all('clients')
+    all_doctors = SelectTable.all('doctors')
+    all_tests = SelectTable.all('tests')
+
+    expect(all_tests.count).to eq 3900
+    expect(all_tests[0]['result_token']).to eq 'IQCZ17'
+    expect(all_clients[0]['cpf']).to eq '048.973.170-88'
+    expect(all_doctors[0]['crm']).to eq 'B000BJ20J4'
   end
 end

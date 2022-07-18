@@ -13,6 +13,8 @@ class ImportFromCsv
 
   def self.save_csv_file(rows)
     @conn = ConnectDatabase.connection
+    DropDatabase.dropall
+    CreateDatabase.create_tables
 
     @client_array = []
     @doctor_array = []
