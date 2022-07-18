@@ -44,9 +44,12 @@ class Server < Sinatra::Base
     doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
     client = SelectTable.get_client(rows[0]['client_id'])
 
+    result_date = { 'result_date': "#{rows[0]['result_date']}" }
+    client = result_date.merge(client)
+    result_token = {'result_token': "#{rows[0]['result_token']}"}
+    client = result_token.merge(client)
     client['doctor'] = doctor
     client['tests'] = []
-
     rows.map do |row|
       client['tests'] << {
         'test_type': row['test_type'],
