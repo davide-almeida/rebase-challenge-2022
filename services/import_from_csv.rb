@@ -13,13 +13,15 @@ class ImportFromCsv
 
   def self.save_csv_file(rows)
     @conn = ConnectDatabase.connection
+    DropDatabase.dropall
+    CreateDatabase.create_tables
 
     @client_array = []
     @doctor_array = []
     client_last_id = nil
     doctor_last_id = nil
 
-    rows.map do |row|
+    rows.each do |row|
       values_client = [row[0], row[1], row[2], row[3], row[4], row[5], row[6]]
       unless @client_array.include?(values_client)
         @client_array << values_client
