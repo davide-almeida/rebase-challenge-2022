@@ -44,6 +44,7 @@ class SelectTable
     ).first.keys
   end
 
+  # get test
   def self.test_by_token(token)
     @conn.exec_params(
       "SELECT *
@@ -52,6 +53,15 @@ class SelectTable
     )
   end
 
+  def self.test_group_by(column)
+    @conn.exec_params(
+      "SELECT #{column}
+      FROM public.tests
+      GROUP BY result_token;"
+    )
+  end
+
+  # get client
   def self.get_client(client_id)
     @conn.exec_params(
       "SELECT cpf, name, email, birthday
@@ -60,6 +70,7 @@ class SelectTable
     ).first
   end
 
+  # get doctor
   def self.get_doctor(doctor_id)
     @conn.exec_params(
       "SELECT crm, crm_state, name

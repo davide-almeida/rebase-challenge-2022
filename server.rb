@@ -14,18 +14,40 @@ class Server < Sinatra::Base
   set :port, 3000
 
   get '/tests' do
-    rows = SelectTable.all('client')
-    if rows.count.positive?
-      column_names = SelectTable.column_names('client')
+    begin
+      tokens_list = []
+      result = []
+      result_tokens = SelectTable.test_group_by('result_token')
+      result_tokens.map do |token|
+        tokens_list << token.values
+      end
 
-      rows.map do |row|
-        row.each_with_object({}).with_index do |(cell, acc), idx|
-          column = column_names[idx]
-          acc[column] = cell[1]
+      tokens_list.each do |t|
+        rows = SelectTable.test_by_token(t[0])
+        doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
+        client = SelectTable.get_client(rows[0]['client_id'])
+
+        result_date = { 'result_date': "#{rows[0]['result_date']}" }
+        client = result_date.merge(client)
+        result_token = {'result_token': "#{rows[0]['result_token']}"}
+        client = result_token.merge(client)
+        client['doctor'] = doctor
+        client['tests'] = []
+        rows.map do |row|
+          client['tests'] << {
+            'test_type': row['test_type'],
+            'test_limits': row['limits'],
+            'result': row['result']
+          }
         end
-      end.to_json
-    else
-      { 'message': 'Não há cadastro.' }.to_json
+
+        result << client
+      end
+      JSON[result]
+
+    rescue
+      status 404
+      { 'message': 'Não há testes cadastrados.' }.to_json
     end
   end
 
@@ -40,25 +62,30 @@ class Server < Sinatra::Base
   end
 
   get '/tests/:token' do
-    rows = SelectTable.test_by_token(params[:token])
-    doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
-    client = SelectTable.get_client(rows[0]['client_id'])
+    begin
+      rows = SelectTable.test_by_token(params[:token])
+      doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
+      client = SelectTable.get_client(rows[0]['client_id'])
 
-    result_date = { 'result_date': "#{rows[0]['result_date']}" }
-    client = result_date.merge(client)
-    result_token = {'result_token': "#{rows[0]['result_token']}"}
-    client = result_token.merge(client)
-    client['doctor'] = doctor
-    client['tests'] = []
-    rows.map do |row|
-      client['tests'] << {
-        'test_type': row['test_type'],
-        'test_limits': row['limits'],
-        'result': row['result']
-      }
+      result_date = { 'result_date': "#{rows[0]['result_date']}" }
+      client = result_date.merge(client)
+      result_token = {'result_token': "#{rows[0]['result_token']}"}
+      client = result_token.merge(client)
+      client['doctor'] = doctor
+      client['tests'] = []
+      rows.map do |row|
+        client['tests'] << {
+          'test_type': row['test_type'],
+          'test_limits': row['limits'],
+          'result': row['result']
+        }
+      end
+
+      JSON[client]
+    rescue
+      status 404
+      { 'message': 'Este token é inválido.' }.to_json
     end
-
-    JSON[client]
   end
 
   run! if app_file == $PROGRAM_NAME
