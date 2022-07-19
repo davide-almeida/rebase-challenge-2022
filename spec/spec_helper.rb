@@ -14,6 +14,7 @@
 #
 require 'sinatra'
 require 'pg'
+require 'rack'
 require 'rack/test'
 require './server'
 
@@ -21,6 +22,9 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+  config.before(:suite) do
+    Rake.load_rakefile './Rakefile'
   end
 
   # rspec-mocks config goes here. You can use an alternate test double
