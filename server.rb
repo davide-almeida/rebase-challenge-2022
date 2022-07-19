@@ -1,4 +1,4 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'rack/handler/puma'
 require 'sidekiq'
 require 'csv'
@@ -10,6 +10,9 @@ require_relative './workers/csv_worker'
 require 'json'
 
 class Server < Sinatra::Base
+  configure :production, :development do
+    enable :logging
+  end
   set :bind, '0.0.0.0'
   set :port, 3000
 
@@ -88,5 +91,5 @@ class Server < Sinatra::Base
     end
   end
 
-  run! if app_file == $PROGRAM_NAME
+  run! if app_file == $0
 end

@@ -1,21 +1,20 @@
 require 'pg'
+require './config/connect_database'
 require 'csv'
 
-@conn = PG.connect( dbname: 'postgres', host: '172.18.0.2', port: 5432, user: 'postgres', password: '54321' )
+@conn = ConnectDatabase.connection
 
 rows = CSV.read("./data.csv", col_sep: ';')
 columns = rows.shift
 
 namespace :database do
   task :db_drop do
-    puts 'Drop database...'
     @conn.exec('DROP TABLE IF EXISTS tests;')
     @conn.exec('DROP TABLE IF EXISTS clients;')
     @conn.exec('DROP TABLE IF EXISTS doctors;')
   end
 
   task :db_client do
-    puts 'Create client database...'
     @conn.exec('CREATE TABLE IF NOT EXISTS clients (
       ID SERIAL PRIMARY KEY,
       cpf varchar(20),
@@ -29,7 +28,6 @@ namespace :database do
   end
 
   task :db_doctor do
-    puts 'Create doctor database'
     @conn.exec('CREATE TABLE IF NOT EXISTS doctors (
       ID SERIAL PRIMARY KEY,
       crm varchar(100),
@@ -40,7 +38,6 @@ namespace :database do
   end
 
   task :db_test do
-    puts 'Create test database'
     @conn.exec('CREATE TABLE IF NOT EXISTS tests (
       ID SERIAL PRIMARY KEY,
       client_id int NOT NULL,
@@ -67,7 +64,6 @@ namespace :seed_database do
       values_client = [row[0], row[1], row[2], row[3], row[4], row[5], row[6]]
       unless @client_array.include?(values_client)
         @client_array << values_client
-        puts 'Insert client database...'
         client_res = @conn.exec_params(
           'INSERT INTO clients ( cpf, name, email, birthday, address, city, state )
           VALUES ( $1::text, $2::text, $3::text, $4::date, $5::text, $6::text, $7::text)
@@ -79,7 +75,6 @@ namespace :seed_database do
       values_doctor = [row[7], row[8], row[9], row[10]]
       unless @doctor_array.include?(values_doctor)
         @doctor_array << values_doctor
-        puts 'Insert doctor database...'
         doctor_res = @conn.exec_params(
           'INSERT INTO doctors ( crm, crm_state, name, email )
           VALUES ( $1::text, $2::text, $3::text, $4::text)
@@ -88,7 +83,6 @@ namespace :seed_database do
         doctor_last_id = doctor_res.values
       end
 
-      puts 'Insert test database...'
       values_test = [client_last_id[0][0].to_i, doctor_last_id[0][0].to_i, row[11], row[12], row[13], row[14], row[15]]
       @conn.exec_params(
         'INSERT INTO tests ( client_id, doctor_id, result_token, result_date, test_type, limits, result )
@@ -100,9 +94,13 @@ end
 
 desc 'perform all tasks'
 task :all do
+  puts 'RakeTask: Reset DB - start...'
   Rake::Task['database:db_drop'].execute
   Rake::Task['database:db_client'].execute
   Rake::Task['database:db_doctor'].execute
   Rake::Task['database:db_test'].execute
+  puts 'RakeTask: Reset DB - end'
+  puts 'RakeTask: Populating data - start...'
   Rake::Task['seed_database:db_insert'].execute
+  puts 'RakeTask: Populating data - end'
 end

@@ -4,7 +4,6 @@ require_relative '../config/connect_database'
 class CreateDatabase
   def self.create_tables
     @conn = ConnectDatabase.connection
-    puts 'Create client database...'
     @conn.exec('CREATE TABLE IF NOT EXISTS clients (
       ID SERIAL PRIMARY KEY,
       cpf varchar(20),
@@ -16,7 +15,6 @@ class CreateDatabase
       state varchar(100)
     )')
 
-    puts 'Create doctor database'
     @conn.exec('CREATE TABLE IF NOT EXISTS doctors (
       ID SERIAL PRIMARY KEY,
       crm varchar(100),
@@ -25,7 +23,6 @@ class CreateDatabase
       email varchar(100)
     )')
 
-    puts 'Create test database'
     @conn.exec('CREATE TABLE IF NOT EXISTS tests (
       ID SERIAL PRIMARY KEY,
       client_id int NOT NULL,

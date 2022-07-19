@@ -1,3 +1,8 @@
 #!/bin/bash
 
-docker run --rm -w /app -v $(pwd):/app -p 3000:3000 -it --network rebase ruby bash -c "gem install rack sinatra puma pg rspec rack-test redis sidekiq && bash"
+docker network create davide-rebase
+docker run --name davide_postgres -v $(pwd)/tmp/pgdata:/var/lib/postgresql/data --network davide-rebase -p 5432:5432 -e POSTGRES_PASSWORD=54321 -d postgres
+docker run --name davide_redis -d --network davide-rebase redis
+docker run --rm -d -it -p 3535:3535 --name davide_sidekiq --network davide-rebase -v $(pwd):/app -v $(pwd)/tmp/gems:/usr/local/bundle -w /app ruby bash -c "gem install sidekiq pg && sidekiq -r ./config/sidekiq.rb -c 8"
+docker run -d --name davide_sidekiq_monitor --network davide-rebase -p 9292:9292 -e "REDIS_URL=redis://davide_redis:6379" -e "SIDEKIQ_STATUS=enable" joshjhall/sidekiq-monitor
+docker run --rm --name davide_rubyapp -w /app -v $(pwd):/app -v $(pwd)/tmp/gems:/usr/local/bundle -p 3000:3000 -it --network davide-rebase ruby bash -c "gem install rack sinatra puma pg rspec rack-test redis sidekiq && rake all && bash help && bash"
