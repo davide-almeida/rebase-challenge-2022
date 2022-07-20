@@ -7,8 +7,8 @@ The challenge description can be read [here](instructions.md).
 
 * Docker
 * Ruby
-* Rspec
 * Sinatra
+* Rspec
 * Redis
 * Sidekiq
 
@@ -20,20 +20,6 @@ $ cd rebase-challenge-2022
 $ bash run
 $ ruby server.rb
 ```
-
-## Routes and endpoints available
-
-```
-localhost:3535 -> Sidekiq panel
-localhost:3000/tests -> (GET) List all tests
-localhost:3000/tests/:token -> (GET) Find test by token
-localhost:3000/import -> (POST) Send a CSV file. The input-field name is 'csv_file'.
-```
-Example post with Postman:
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/85287720/179868493-26dc7582-e542-4f1f-9455-335d66fcb81e.png" alt="Example with Postman"/>
-</p>
 
 ## Commands available
 ### App:
@@ -52,8 +38,29 @@ rake database:db_doctor -> Create Doctors table
 rake database:db_test -> Create Tests table
 rake seed_database:db_insert -> Populate database
 ```
+
 ## API
 [Documentation](api.md)
+
+## Routes and endpoints available
+
+```
+localhost:3535 -> Sidekiq panel
+localhost:3000/tests -> (GET) List all tests
+localhost:3000/tests/:token -> (GET) Find test by token
+localhost:3000/import -> (POST) Send a CSV file. The input-field name is 'csv_file'.
+```
+Example post with Postman:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/85287720/179868493-26dc7582-e542-4f1f-9455-335d66fcb81e.png" alt="Example with Postman"/>
+</p>
+
+## Database schema
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/85287720/179990821-42aea367-47d6-4945-b145-26ad17cb48e4.png" alt="Database schema"/>
+</p>
 
 ## Tests:
 
