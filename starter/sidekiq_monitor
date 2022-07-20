@@ -1,0 +1,12 @@
+#!/bin/bash
+
+docker run -d \
+  --rm \
+  -p 3535:3535 \
+  --name davide_sidkiq_monitor \
+  --network davide-rebase \
+  -v $(pwd):/app \
+  -v $(pwd)/tmp/gems:/usr/local/bundle \
+  -w /app \
+  ruby \
+  bash -c 'bundle && rackup -o 0.0.0.0 -p 3535'

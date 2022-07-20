@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker run --name davide_redis -d --network davide-rebase redis

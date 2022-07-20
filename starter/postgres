@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker run -d \
+  --name davide_postgres \
+  -v pgdata:/var/lib/postgresql/data \
+  --network davide-rebase \
+  -p 5432:5432 \
+  -e POSTGRES_PASSWORD=54321 \
+  postgres

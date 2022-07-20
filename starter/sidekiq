@@ -1,0 +1,11 @@
+#!/bin/bash
+
+docker run -d \
+  --rm \
+  --name davide_sidekiq \
+  --network davide-rebase \
+  -v $(pwd):/app \
+  -v $(pwd)/tmp/gems:/usr/local/bundle \
+  -w /app \
+  ruby \
+  bash -c 'bundle && sidekiq -r ./config/sidekiq.rb -c 8'

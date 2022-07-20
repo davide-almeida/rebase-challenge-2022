@@ -1,0 +1,12 @@
+#!/bin/bash
+
+docker run --rm \
+--name davide_rubyapp \
+-w /app \
+-v $(pwd):/app \
+-v $(pwd)/tmp/gems:/usr/local/bundle \
+-p 3000:3000 \
+-it \
+--network davide-rebase \
+ruby \
+bash -c 'bundle && rake all && bash help && bash'

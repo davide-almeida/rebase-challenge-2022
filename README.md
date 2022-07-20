@@ -16,10 +16,23 @@ You can see this project in production, hosted on AWS right [here](http://18.212
 
 ## Running
 
+Option 1:
 ```bash
-$ git clone git@github.com:davide-almeida/rebase-challenge-2022.git
+$ git clone https://github.com/davide-almeida/rebase-challenge-2022.git
 $ cd rebase-challenge-2022
 $ bash run
+```
+
+Option 2:
+```bash
+$ git clone https://github.com/davide-almeida/rebase-challenge-2022.git
+$ cd rebase-challenge-2022
+$ docker network create davide-rebase
+$ bash 'starter/postgres'
+$ bash 'starter/redis'
+$ bash 'starter/sidekiq'
+$ bash 'starter/sidekiq_monitor'
+$ bash 'starter/app'
 $ ruby server.rb
 ```
 
