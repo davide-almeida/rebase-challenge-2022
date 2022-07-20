@@ -3,9 +3,7 @@
 Ruby API for listing medical exams from a CSV file.
 The challenge description can be read [here](insctructions.md).
 
-## API Documentation
-
-### Examples
+## API Documentation - Examples
 
 ---
 
@@ -191,6 +189,10 @@ Response (status: 200):
   "message": "O cadastro está sendo processado!"
 }
 ```
+
+Example post with Postman:
+
+![image](https://user-images.githubusercontent.com/85287720/179868801-a6fb2961-a867-444e-997c-39b36dafbdcf.png)
 
 Request:
 ```bash
