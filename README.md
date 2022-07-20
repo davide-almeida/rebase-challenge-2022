@@ -58,7 +58,9 @@ Example post with Postman:
 
 ## Database schema
 
-![image](https://user-images.githubusercontent.com/85287720/179992378-a12e20ab-f61e-4902-95ba-23be8f3de60a.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/85287720/179992378-a12e20ab-f61e-4902-95ba-23be8f3de60a.png" alt="Database schema">
+</p>
 
 ## Tests:
 
