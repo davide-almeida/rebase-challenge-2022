@@ -24,7 +24,7 @@ $ ruby server.rb
 ## Routes and endpoints available
 
 ```
-localhost:9292 -> Sidekiq panel
+localhost:3535 -> Sidekiq panel
 localhost:3000/tests -> (GET) List all tests
 localhost:3000/tests/:token -> (GET) Find test by token
 localhost:3000/import -> (POST) Send a CSV file. The input-field name is 'csv_file'.
