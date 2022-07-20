@@ -56,11 +56,16 @@ Example post with Postman:
   <img src="https://user-images.githubusercontent.com/85287720/179868493-26dc7582-e542-4f1f-9455-335d66fcb81e.png" alt="Example with Postman"/>
 </p>
 
-## Database schema
+## Database
+
+### Database schema
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/85287720/179992378-a12e20ab-f61e-4902-95ba-23be8f3de60a.png" alt="Database schema">
 </p>
+
+### Connection settings
+If you need to change data to connect database, you can change settings in `./config/connect_database.rb` file.
 
 ## Tests:
 
