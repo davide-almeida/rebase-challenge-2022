@@ -3,6 +3,8 @@
 Ruby API for listing medical exams from a CSV file.
 The challenge description can be read [here](instructions.md).
 
+You can see this project in production, hosted on AWS right [here](http://18.212.28.147:3000/tests).
+
 ## Tech Stack
 
 * Docker
