@@ -6,7 +6,7 @@ require_relative './import_from_csv'
 
 class SelectTable
   @conn = ConnectDatabase.connection
-  
+
   def self.all(table_name)
     @conn.exec_params("select * from #{table_name}")
   end
@@ -20,12 +20,6 @@ class SelectTable
   end
 
   def self.alltables
-    # REMOVE
-    # DropDatabase.dropall
-    # CreateDatabase.create_tables
-    # csv_file_rows = ImportFromCsv.csv_file('./data.csv')
-    # ImportFromCsv.save_csv_file(csv_file_rows)
-
     @conn.exec_params(
       'SELECT *
       FROM public.tests tests
