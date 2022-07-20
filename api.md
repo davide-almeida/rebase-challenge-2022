@@ -2,6 +2,7 @@
 
 Ruby API for listing medical exams from a CSV file.
 The challenge description can be read [here](insctructions.md).
+And you can go back to the Readme [here](README.md).
 
 ## API Documentation - Examples
 
