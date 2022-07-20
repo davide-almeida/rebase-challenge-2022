@@ -31,12 +31,15 @@ localhost:3000/import -> (POST) Send a CSV file. The input-field name is 'csv_fi
 ```
 Example post with Postman:
 
-![image](https://user-images.githubusercontent.com/85287720/179868493-26dc7582-e542-4f1f-9455-335d66fcb81e.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/85287720/179868493-26dc7582-e542-4f1f-9455-335d66fcb81e.png" alt="Example with Postman"/>
+</p>
 
 ## Commands available
 ### App:
 ```
 ruby server.rb -> Start app
+rspec -> Run all tests
 bash help -> Commands list
 ```
 
@@ -51,3 +54,9 @@ rake seed_database:db_insert -> Populate database
 ```
 ## API
 [Documentation](api.md)
+
+## Tests:
+
+```bash
+$ rspec
+```

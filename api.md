@@ -192,7 +192,9 @@ Response (status: 200):
 
 Example post with Postman:
 
-![image](https://user-images.githubusercontent.com/85287720/179868801-a6fb2961-a867-444e-997c-39b36dafbdcf.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/85287720/179868801-a6fb2961-a867-444e-997c-39b36dafbdcf.png" alt="Example with Postman"/>
+</p>
 
 Request:
 ```bash
