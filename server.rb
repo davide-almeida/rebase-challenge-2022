@@ -16,6 +16,14 @@ class Server < Sinatra::Base
   set :bind, '0.0.0.0'
   set :port, 3000
 
+  get '/' do
+    redirect '/tests'
+  end
+
+  get '/tests/' do
+    redirect '/tests'
+  end
+
   get '/tests' do
     begin
       tokens_list = []
@@ -54,16 +62,6 @@ class Server < Sinatra::Base
     end
   end
 
-  post '/import' do
-    if params[:csv_file].nil? || params[:csv_file][:type] != 'text/csv'
-      { 'message': 'Erro ao tentar cadastrar o arquivo .CSV' }.to_json
-    else
-      csv_file_rows = ImportFromCsv.csv_file(params[:csv_file][:tempfile])
-      CsvWorker.perform_async(csv_file_rows)
-      { 'message': 'O cadastro está sendo processado!' }.to_json
-    end
-  end
-
   get '/tests/:token' do
     begin
       rows = SelectTable.test_by_token(params[:token])
@@ -88,6 +86,16 @@ class Server < Sinatra::Base
     rescue
       status 404
       { 'message': 'Este token é inválido.' }.to_json
+    end
+  end
+
+  post '/import' do
+    if params[:csv_file].nil? || params[:csv_file][:type] != 'text/csv'
+      { 'message': 'Erro ao tentar cadastrar o arquivo .CSV' }.to_json
+    else
+      csv_file_rows = ImportFromCsv.csv_file(params[:csv_file][:tempfile])
+      CsvWorker.perform_async(csv_file_rows)
+      { 'message': 'O cadastro está sendo processado!' }.to_json
     end
   end
 

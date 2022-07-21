@@ -16,6 +16,7 @@ require 'sinatra'
 require 'pg'
 require 'rack'
 require 'rack/test'
+require 'rake'
 require './server'
 
 RSpec.configure do |config|
