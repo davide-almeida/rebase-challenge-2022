@@ -6,8 +6,8 @@ describe 'GET /tests/:token' do
   context 'and try find test by token' do
     it 'with success' do
       @conn = ConnectDatabase.connection
-      DropDatabase.dropall
-      CreateDatabase.create_tables
+      ApplicationModels.drop_all_tables
+      ApplicationModels.create_all_tables
 
       clients = [
         ['081.878.172-67', 'Emanuel Beltrão Neto', 'jennine@mosciski-swaniawski.co', '1989-10-28', '5538 Avenida Lívia', 'Pão de Açúcar', 'Roraima'],
@@ -55,8 +55,8 @@ describe 'GET /tests/:token' do
 
     it 'with wrong params' do
       @conn = ConnectDatabase.connection
-      DropDatabase.dropall
-      CreateDatabase.create_tables
+      ApplicationModels.drop_all_tables
+      ApplicationModels.create_all_tables
 
       clients = [
         ['081.878.172-67', 'Emanuel Beltrão Neto', 'jennine@mosciski-swaniawski.co', '1989-10-28', '5538 Avenida Lívia', 'Pão de Açúcar', 'Roraima'],

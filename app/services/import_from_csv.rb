@@ -1,8 +1,7 @@
 require 'pg'
 require 'csv'
-require_relative '../config/connect_database'
-require_relative './drop_database'
-require_relative './create_database'
+require './config/connect_database'
+require './app/models/application_models'
 
 class ImportFromCsv
   def self.csv_file(csv_file)
@@ -13,8 +12,8 @@ class ImportFromCsv
 
   def self.save_csv_file(rows)
     @conn = ConnectDatabase.connection
-    DropDatabase.dropall
-    CreateDatabase.create_tables
+    ApplicationModels.drop_all_tables
+    ApplicationModels.create_all_tables
 
     @client_array = []
     @doctor_array = []

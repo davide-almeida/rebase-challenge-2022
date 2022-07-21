@@ -17,7 +17,12 @@ require 'pg'
 require 'rack'
 require 'rack/test'
 require 'rake'
+require './config/connect_database'
 require './server'
+require './app/models/client'
+require './app/models/doctor'
+require './app/models/test'
+require './app/models/application_models'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
