@@ -73,17 +73,18 @@ Example post with Postman:
 
 ## Database
 
+### Connection settings
+If you need to change data to connect database, you can change settings in `./config/connect_database.rb` file.
+
 ### Database schema
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/85287720/179992378-a12e20ab-f61e-4902-95ba-23be8f3de60a.png" alt="Database schema">
 </p>
 
-### Connection settings
-If you need to change data to connect database, you can change settings in `./config/connect_database.rb` file.
-
 ## Tests:
 
+After downloading, and entering the project directory, you can run the commands below...
 ```bash
 $ docker network create davide-rebase
 $ bash 'starter/postgres'
