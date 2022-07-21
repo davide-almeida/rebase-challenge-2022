@@ -1,6 +1,6 @@
 require 'pg'
 require 'csv'
-require_relative '../config/connect_database'
+require './config/connect_database'
 require_relative './drop_database'
 require_relative './create_database'
 

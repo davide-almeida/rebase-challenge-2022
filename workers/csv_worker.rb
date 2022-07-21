@@ -1,6 +1,6 @@
 require 'sidekiq'
-require_relative '../config/sidekiq'
-require_relative '../services/import_from_csv'
+require './config/sidekiq'
+require './app/services/import_from_csv'
 
 class CsvWorker
   include Sidekiq::Job

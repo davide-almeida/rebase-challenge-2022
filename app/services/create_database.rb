@@ -1,5 +1,5 @@
 require 'pg'
-require_relative '../config/connect_database'
+require './config/connect_database'
 
 class CreateDatabase
   def self.create_tables
