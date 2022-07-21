@@ -85,5 +85,12 @@ If you need to change data to connect database, you can change settings in `./co
 ## Tests:
 
 ```bash
+$ docker network create davide-rebase
+$ bash 'starter/postgres'
+$ bash 'starter/redis'
+$ bash 'starter/sidekiq'
+$ bash 'starter/sidekiq_monitor'
+$ bash 'starter/app'
 $ rspec
 ```
+You can find all tests in `./spec/` directory
