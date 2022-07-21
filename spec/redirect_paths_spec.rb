@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sinatra'
 
 describe 'Redirect paths' do
   let(:app) { Server.new }
