@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  rubyapp:
+    container_name: davide_app
+    image: ruby
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - 3000:3000
+    command: bash -c "bundle && rake all && ruby server.rb"
+    depends_on:
+      - db
+      - davide_redis
+    networks:
+      - davide-rebase
+
+  postgres:
+    container_name: davide_postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 54321
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - davide-rebase
+
+  redis:
+    container_name: davide_redis
+    image: redis
+    networks:
+      - davide-rebase
+
+  sidekiq:
+    container_name: davide_sidekiq
+    image: ruby
+    volumes:
+      - .:/app
+      - ./tmp/gems:/usr/local/bundle
+    working_dir: /app
+    depends_on:
+      - rubyapp
+      - davide_postgres
+      - davide_redis
+    command: bash -c "bundle && sidekiq -r ./config/sidekiq.rb -c 8"
+    networks:
+      - davide-rebase
+
+  sidkiq_monitor:
+    container_name: davide_sidkiq_monitor
+    image: ruby
+    volumes:
+      - .:/app
+      - ./tmp/gems:/usr/local/bundle
+    ports:
+      - 3535:3535
+    working_dir: /app
+    command: bash -c "bundle && rackup -o 0.0.0.0 -p 3535"
+    depends_on:
+      - rubyapp
+      - davide_postgres
+      - davide_redis
+      - davide_sidekiq
+    networks:
+      - davide-rebase
+
+volumes:
+  pgdata:
+
+networks:
+  davide-rebase:
+    name: davide-rebase
+    driver: bridge

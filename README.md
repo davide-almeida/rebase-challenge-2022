@@ -20,7 +20,7 @@ Option 1:
 ```bash
 $ git clone https://github.com/davide-almeida/rebase-challenge-2022.git
 $ cd rebase-challenge-2022
-$ bash run
+$ docker-compose up
 ```
 
 Option 2:
@@ -37,6 +37,7 @@ $ ruby server.rb
 ```
 
 ## Commands available
+(if you run option 2)
 ### App:
 ```
 ruby server.rb -> Start app
