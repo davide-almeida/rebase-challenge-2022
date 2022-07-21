@@ -6,8 +6,8 @@ describe 'GET /tests' do
   context 'and try find some record' do
     it 'and find some records with success' do
       @conn = ConnectDatabase.connection
-      DropDatabase.dropall
-      CreateDatabase.create_tables
+      ApplicationModels.drop_all_tables
+      ApplicationModels.create_all_tables
 
       clients = [
         ['081.878.172-67', 'Emanuel Beltrão Neto', 'jennine@mosciski-swaniawski.co', '1989-10-28', '5538 Avenida Lívia', 'Pão de Açúcar', 'Roraima'],
@@ -60,7 +60,7 @@ describe 'GET /tests' do
     end
 
     it 'but there isnt records' do
-      DropDatabase.dropall
+      ApplicationModels.drop_all_tables
 
       response = get '/tests'
 

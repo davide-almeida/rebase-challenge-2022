@@ -1,15 +1,11 @@
 require 'spec_helper'
-require 'pg'
-require_relative '../config/connect_database'
-require 'rake'
-require 'rspec'
 
 describe 'Trying use tasks' do
   let(:app) { Server.new }
 
   it 'drop database' do
     @conn = ConnectDatabase.connection
-    CreateDatabase.create_tables
+    ApplicationModels.create_all_tables
 
     Rake::Task['database:db_drop'].execute
 
@@ -50,9 +46,9 @@ describe 'Trying use tasks' do
     Rake::Task['database:db_test'].execute
     Rake::Task['seed_database:db_insert'].execute
 
-    all_clients = SelectTable.all('clients')
-    all_doctors = SelectTable.all('doctors')
-    all_tests = SelectTable.all('tests')
+    all_clients = Client.all
+    all_doctors = Doctor.all
+    all_tests = Test.all
 
     expect(all_tests.count).to eq 3900
     expect(all_doctors.count).to eq 10

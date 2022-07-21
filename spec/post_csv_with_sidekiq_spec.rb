@@ -17,9 +17,9 @@ describe 'POST /import' do
 
     it 'when csv_file input is wrong' do
       post '/import', csv_file: Rack::Test::UploadedFile.new('data.csv', 'image/jpg')
-      all_clients = SelectTable.all('clients')
-      all_doctors = SelectTable.all('doctors')
-      all_tests = SelectTable.all('tests')
+      all_clients = Client.all
+      all_doctors = Doctor.all
+      all_tests = Test.all
 
       expect(all_tests.count).to eq 3900
       expect(all_clients.count).to eq 50

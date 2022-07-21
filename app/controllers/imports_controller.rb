@@ -1,5 +1,4 @@
 require './app/services/import_from_csv'
-require './app/services/select_table'
 require './workers/csv_worker'
 
 class ImportsController < Sinatra::Base

@@ -1,5 +1,5 @@
+require './app/models/test'
 require './app/services/import_from_csv'
-require './app/services/select_table'
 
 class TestsController < Sinatra::Base
   get '/' do
@@ -14,15 +14,15 @@ class TestsController < Sinatra::Base
     begin
       tokens_list = []
       result = []
-      result_tokens = SelectTable.test_group_by('result_token')
+      result_tokens = Test.group_by('result_token')
       result_tokens.map do |token|
         tokens_list << token.values
       end
 
       tokens_list.each do |t|
-        rows = SelectTable.test_by_token(t[0])
-        doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
-        client = SelectTable.get_client(rows[0]['client_id'])
+        rows = Test.by_token(t[0])
+        doctor = Test.get_doctor(rows[0]['doctor_id'])
+        client = Test.get_client(rows[0]['client_id'])
 
         result_date = { 'result_date': "#{rows[0]['result_date']}" }
         client = result_date.merge(client)
@@ -49,9 +49,9 @@ class TestsController < Sinatra::Base
 
   get '/tests/:token' do
     begin
-      rows = SelectTable.test_by_token(params[:token])
-      doctor = SelectTable.get_doctor(rows[0]['doctor_id'])
-      client = SelectTable.get_client(rows[0]['client_id'])
+      rows = Test.by_token(params[:token])
+      doctor = Test.get_doctor(rows[0]['doctor_id'])
+      client = Test.get_client(rows[0]['client_id'])
 
       result_date = { 'result_date': "#{rows[0]['result_date']}" }
       client = result_date.merge(client)
