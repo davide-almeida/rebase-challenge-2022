@@ -1,8 +1,0 @@
-#!/bin/bash
-
-docker network create davide-rebase
-docker run --name davide_postgres -v pgdata:/var/lib/postgresql/data --network davide-rebase -p 5432:5432 -e POSTGRES_PASSWORD=54321 -d postgres
-docker run --name davide_redis -d --network davide-rebase redis
-docker run --rm -d --name davide_sidekiq --network davide-rebase -v $(pwd):/app -v $(pwd)/tmp/gems:/usr/local/bundle -w /app ruby bash -c 'bundle && sidekiq -r ./config/sidekiq.rb -c 8'
-docker run -d -it -p 3535:3535 --name davide_sidkiq_monitor --rm --network davide-rebase -v $(pwd):/app -v $(pwd)/tmp/gems:/usr/local/bundle -w /app ruby bash -c 'bundle && rackup -o 0.0.0.0 -p 3535'
-docker run -d --rm -it --name davide_rubyapp -w /app -v $(pwd):/app -v $(pwd)/tmp/gems:/usr/local/bundle -p 3000:3000 --network davide-rebase ruby bash -c "bundle && rake all && ruby server.rb"

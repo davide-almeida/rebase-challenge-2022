@@ -9,12 +9,15 @@ columns = rows.shift
 
 namespace :database do
   task :db_drop do
+    puts 'RakeTask: drop tables - start...'
     @conn.exec('DROP TABLE IF EXISTS tests;')
     @conn.exec('DROP TABLE IF EXISTS clients;')
     @conn.exec('DROP TABLE IF EXISTS doctors;')
+    puts 'RakeTask: drop tables - end'
   end
 
   task :db_client do
+    puts 'RakeTask: create client table - start...'
     @conn.exec('CREATE TABLE IF NOT EXISTS clients (
       ID SERIAL PRIMARY KEY,
       cpf varchar(20),
@@ -25,9 +28,11 @@ namespace :database do
       city varchar(100),
       state varchar(100)
     )')
+    puts 'RakeTask: create client table - end'
   end
 
   task :db_doctor do
+    puts 'RakeTask: create doctor table - start...'
     @conn.exec('CREATE TABLE IF NOT EXISTS doctors (
       ID SERIAL PRIMARY KEY,
       crm varchar(100),
@@ -35,9 +40,11 @@ namespace :database do
       name varchar(100),
       email varchar(100)
     )')
+    puts 'RakeTask: create doctor table - end'
   end
 
   task :db_test do
+    puts 'RakeTask: create test table - start...'
     @conn.exec('CREATE TABLE IF NOT EXISTS tests (
       ID SERIAL PRIMARY KEY,
       client_id int NOT NULL,
@@ -50,6 +57,7 @@ namespace :database do
       result INT,
       result_token varchar(100)
     )')
+    puts 'RakeTask: create test table - end'
   end
 end
 
@@ -60,6 +68,7 @@ doctor_last_id = nil
 
 namespace :seed_database do
   task :db_insert do
+    puts 'RakeTask: Populating database - start...'
     rows.map do |row|
       values_client = [row[0], row[1], row[2], row[3], row[4], row[5], row[6]]
       unless @client_array.include?(values_client)
@@ -89,18 +98,15 @@ namespace :seed_database do
         VALUES ( $1::int, $2::int, $3::text, $4::date, $5::text, $6::text, $7::int);', values_test
       )
     end
+    puts 'RakeTask: Populating database - end'
   end
 end
 
 desc 'perform all tasks'
 task :all do
-  puts 'RakeTask: Reset DB - start...'
   Rake::Task['database:db_drop'].execute
   Rake::Task['database:db_client'].execute
   Rake::Task['database:db_doctor'].execute
   Rake::Task['database:db_test'].execute
-  puts 'RakeTask: Reset DB - end'
-  puts 'RakeTask: Populating data - start...'
   Rake::Task['seed_database:db_insert'].execute
-  puts 'RakeTask: Populating data - end'
 end

@@ -9,4 +9,4 @@ docker run --rm \
 -it \
 --network davide-rebase \
 ruby \
-bash -c 'bundle && rake all && bash help && bash'
+bash -c "bundle && rake all && bash starter/help && bash"
