@@ -39,33 +39,37 @@ $ ruby server.rb
 ## Commands available
 (if you run option 2)
 ### App:
-```
-ruby server.rb -> Start app
-rspec -> Run all tests
-bash help -> Commands list
-```
+
+| Command | Description |
+| --- | --- |
+| `ruby server.rb` | Start app |
+| `rspec` | Run all tests |
+| `bash starter/help` | Commands list |
+
 
 ### Database:
-```
-rake all -> Remove tables, create new tables e populate database.
-rake database:db_drop -> Remove tables
-rake database:db_client -> Create Clients table
-rake database:db_doctor -> Create Doctors table
-rake database:db_test -> Create Tests table
-rake seed_database:db_insert -> Populate database
-```
+| Command | Description |
+| --- | --- |
+| `rake all` | Remove tables, create new tables e populate database. |
+| `rake database:db_drop` | Remove tables |
+| `rake database:db_client` | Create Clients table |
+| `rake database:db_doctor` | Create Doctors table |
+| `rake database:db_test` | Create Tests table |
+| `rake seed_database:db_insert` | Populate database |
 
 ## API
 [Documentation](starter/readme/api.md)
 
 ## Routes and endpoints available
 
-```
-localhost:3535 -> Sidekiq panel
-localhost:3000/tests -> (GET) List all tests
-localhost:3000/tests/:token -> (GET) Find test by token
-localhost:3000/import -> (POST) Send a CSV file. The input-field name is 'csv_file'.
-```
+| URL | Description |
+| --- | --- |
+| `localhost:3535` | Sidekiq panel |
+| `localhost:3000/tests` | (GET) List all tests |
+| `localhost:3000/tests/:token` | (GET) Find test by token |
+| `localhost:3000/import` | (POST) Send a CSV file. The input-field name is 'csv_file'. |
+
+
 Example post with Postman:
 
 <p align="center">
