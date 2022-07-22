@@ -70,7 +70,7 @@ $ ruby server.rb
 | `localhost:3000/import` | (POST) Send a CSV file. The input-field name is 'csv_file'. |
 
 
-Example post with Postman:
+### Example post with Postman:
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/85287720/179868493-26dc7582-e542-4f1f-9455-335d66fcb81e.png" alt="Example with Postman"/>
